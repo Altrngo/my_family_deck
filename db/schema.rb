@@ -20,6 +20,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_21_045759) do
     t.string "role"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["child_id", "user_id"], name: "index_child_accesses_on_child_id_and_user_id", unique: true
     t.index ["child_id"], name: "index_child_accesses_on_child_id"
     t.index ["user_id"], name: "index_child_accesses_on_user_id"
   end
