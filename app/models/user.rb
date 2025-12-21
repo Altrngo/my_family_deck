@@ -3,4 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  #Relations
+  has_many :child_accesses, dependent: :destroy
+  has_many :children, through: :child_accesses
+
+  # Enfants dont je suis le propriétaire principal
+  has_many :owned_children, class_name: "Child", foreign_key: "owner_id", dependent: :destroy
 end

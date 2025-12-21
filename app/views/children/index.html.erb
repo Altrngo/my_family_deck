@@ -1,2 +1,19 @@
-<h1>Children#index</h1>
-<p>Find me in app/views/children/index.html.erb</p>
+<h1>Mes enfants</h1>
+
+<%= link_to "Ajouter un enfant", new_child_path, class: "btn btn-primary mb-3" %>
+
+<% if @children.any? %>
+  <ul class="list-group">
+    <% @children.each do |child| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <%= link_to child.name, child %>
+        <small class="text-muted">
+          Né(e) le <%= l(child.birth_date, format: :long) if child.birth_date %>
+          - <%= child.gender %>
+        </small>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Vous n'avez pas encore ajouté d'enfant.</p>
+<% end %>

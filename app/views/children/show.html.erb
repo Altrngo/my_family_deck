@@ -1,2 +1,16 @@
-<h1>Children#show</h1>
-<p>Find me in app/views/children/show.html.erb</p>
+<h1><%= @child.name %></h1>
+
+<p>
+  <strong>Date de naissance :</strong> <%= l(@child.birth_date, format: :long) %><br>
+  <strong>Genre :</strong> <%= @child.gender %>
+</p>
+
+<div class="mt-4">
+  <%= link_to "Modifier le profil", edit_child_path(@child), class: "btn btn-warning me-2" if @child_access&.parent? %>
+  <%= link_to "Retour à la liste", children_path, class: "btn btn-secondary" %>
+</div>
+
+<hr>
+
+<h2>Événements à venir</h2>
+<p class="text-muted">On ajoutera la liste des événements ici plus tard 👶</p>
