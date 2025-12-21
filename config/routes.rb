@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get "children/index"
+  get "children/show"
+  get "children/new"
+  get "children/create"
+  get "children/edit"
+  get "children/update"
+  get "children/destroy"
   get "home/index"
   devise_for :users
   root to: "home#index" #il nous faut créer un controlleur "Home" plus tard

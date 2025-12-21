@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_20_160820) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_21_045759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "child_accesses", force: :cascade do |t|
+    t.bigint "child_id", null: false
+    t.datetime "created_at", null: false
+    t.string "role"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["child_id"], name: "index_child_accesses_on_child_id"
+    t.index ["user_id"], name: "index_child_accesses_on_user_id"
+  end
+
+  create_table "children", force: :cascade do |t|
+    t.date "birth_date"
+    t.datetime "created_at", null: false
+    t.string "gender"
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_children_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -25,4 +45,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_20_160820) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "child_accesses", "children"
+  add_foreign_key "child_accesses", "users"
+  add_foreign_key "children", "users"
 end
