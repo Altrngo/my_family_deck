@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_21_045759) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_06_170519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,9 +30,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_21_045759) do
     t.datetime "created_at", null: false
     t.string "gender"
     t.string "name"
+    t.bigint "owner_id", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_children_on_user_id"
+    t.index ["owner_id"], name: "index_children_on_owner_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,5 +49,5 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_21_045759) do
 
   add_foreign_key "child_accesses", "children"
   add_foreign_key "child_accesses", "users"
-  add_foreign_key "children", "users"
+  add_foreign_key "children", "users", column: "owner_id"
 end

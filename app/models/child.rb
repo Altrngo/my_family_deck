@@ -4,7 +4,7 @@ class Child < ApplicationRecord
   has_many :users, through: :child_accesses
 
   #Propriétaire principal, celui qui créél'enfant
-  belongs_to :owner, class_name: "User", optional: true
+  belongs_to :owner, class_name: "User" #optional: true
 
 
   #validations

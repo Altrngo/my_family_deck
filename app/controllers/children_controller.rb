@@ -13,7 +13,7 @@ class ChildrenController < ApplicationController
   end
 
   def new
-    @child = child.new
+    @child = Child.new
   end
 
   def create
