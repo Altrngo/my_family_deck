@@ -14,3 +14,54 @@
 
 <h2>Événements à venir</h2>
 <p class="text-muted">On ajoutera la liste des événements ici plus tard 👶</p>
+
+<hr>
+
+<h3>Personnes ayant accès à ce profil</h3>
+
+<% if @child.users.any? %>
+  <ul class="list-group mb-4">
+    <% @child.users.each do |user| %>
+      <% access = @child.child_accesses.find_by(user: user) %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <%= user.email %>
+        <span class="badge bg-primary rounded-pill">
+          <%= access.role.capitalize %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">Personne d'autre n'a accès pour l'instant.</p>
+<% end %>
+
+<% if @child_access&.parent? %>
+  <h4>Inviter une personne</h4>
+
+  <%= form_with url: child_invitations_path(@child), local: true do |f| %>
+    <div class="row">
+      <div class="col-md-5 mb-3">
+        <%= f.label :email, "Email de la personne" %>
+        <%= f.email_field :email, class: "form-control", required: true %>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <%= f.label :role, "Rôle" %>
+        <%= f.select :role,
+                     options_for_select([
+                       ["Parent", "parent"],
+                       ["Famille", "family"],
+                       ["Garde (nounou...)", "garde"],
+                       ["Médical (pédiatre...)", "médical"],
+                       ["Lecture seule", "viewer"]
+                     ]),
+                     {},
+                     class: "form-control" %>
+      </div>
+
+      <div class="col-md-3 d-flex align-items-end">
+        <%= f.submit "Envoyer l'invitation", class: "btn btn-success" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
