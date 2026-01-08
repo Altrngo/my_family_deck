@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "events/new"
+  get "events/create"
+  get "events/index"
   get "invitations/create"
   # get "children/index"
   # get "children/show"
@@ -19,6 +22,10 @@ Rails.application.routes.draw do
 
   resources :children do
     resources :invitations, only: [:create]
+  end
+
+  resources :children do
+    resources :events, only: [:index, :new, :create]
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

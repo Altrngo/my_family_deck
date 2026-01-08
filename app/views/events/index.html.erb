@@ -1,0 +1,56 @@
+<h1>Événements de <%= @child.name %></h1>
+
+<%= link_to "Nouvel événement", new_child_event_path(@child), class: "btn btn-success mb-4" %>
+
+<% if @events.any? %>
+  <div class="timeline">
+    <% @events.each do |event| %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= event.start_time.strftime("%d %b %Y à %H:%M") %>
+            — <strong><%= event.type %></strong>
+          </h5>
+
+          <p class="card-text">
+            <% if event.value_float.present? %>
+              <% case event.type %>
+              <% when "Biberon" %>
+                Quantité : <%= number_with_precision(event.value_float, precision: 0) %> ml<br>
+              <% when "Temperature" %>
+                Température : <%= number_with_precision(event.value_float, precision: 1) %> °C<br>
+              <% when "Poids" %>
+                Poids : <%= number_with_precision(event.value_float, precision: 2) %> kg<br>
+              <% when "Taille" %>
+                Taille : <%= number_with_precision(event.value_float, precision: 1) %> cm<br>
+              <% end %>
+            <% end %>
+
+            <% if event.value_string.present? %>
+              <% case event.type %>
+              <% when "Couche" %>
+                Contenu : <%= event.value_string %><br>
+              <% when "Medicament" %>
+                Médicament : <%= event.value_string %><br>
+              <% when "Maladie", "Repas", "Vaccin", "Bobo", "Evenement" %>
+                Description : <%= event.value_string %><br>
+              <% end %>
+            <% end %>
+
+            <% if event.end_time.present? %>
+              Fin : <%= event.end_time.strftime("%H:%M") %><br>
+            <% end %>
+
+            <% if event.comment.present? %>
+              <em>Commentaire : <%= event.comment %></em>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-muted">Aucun événement enregistré pour cet enfant.</p>
+<% end %>
+
+<%= link_to "Retour au profil", @child, class: "btn btn-secondary mt-3" %>

@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  child: one
+  user: one
+  type: 
+  start_time: 2026-01-07 13:56:28
+  end_time: 2026-01-07 13:56:28
+  value_float: 1.5
+  value_string: MyString
+  comment: MyText
+  parent_validation: false
+  created_at: 2026-01-07 13:56:28
+  updated_at: 2026-01-07 13:56:28
+
+two:
+  child: two
+  user: two
+  type: 
+  start_time: 2026-01-07 13:56:28
+  end_time: 2026-01-07 13:56:28
+  value_float: 1.5
+  value_string: MyString
+  comment: MyText
+  parent_validation: false
+  created_at: 2026-01-07 13:56:28
+  updated_at: 2026-01-07 13:56:28

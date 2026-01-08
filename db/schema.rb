@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_06_222110) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_07_125628) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -35,6 +35,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_06_222110) do
     t.index ["owner_id"], name: "index_children_on_owner_id"
   end
 
+  create_table "events", force: :cascade do |t|
+    t.bigint "child_id", null: false
+    t.text "comment"
+    t.datetime "created_at"
+    t.datetime "end_time"
+    t.boolean "parent_validation"
+    t.datetime "start_time"
+    t.string "type"
+    t.datetime "updated_at"
+    t.bigint "user_id", null: false
+    t.float "value_float"
+    t.string "value_string"
+    t.index ["child_id"], name: "index_events_on_child_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.date "birth_date"
     t.datetime "created_at", null: false
@@ -55,4 +71,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_06_222110) do
   add_foreign_key "child_accesses", "children"
   add_foreign_key "child_accesses", "users"
   add_foreign_key "children", "users", column: "owner_id"
+  add_foreign_key "events", "children"
+  add_foreign_key "events", "users"
 end

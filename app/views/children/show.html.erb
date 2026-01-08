@@ -17,6 +17,14 @@
 
 <hr>
 
+<div class="mt-4">
+  <%= link_to "Voir tous les événements", child_events_path(@child), class: "btn btn-info me-3" %>
+  <%= link_to "Ajouter un événement", new_child_event_path(@child), class: "btn btn-success" %>
+</div>
+
+
+<hr>
+
 <h3>Personnes ayant accès à ce profil</h3>
 
 <% if @child.users.any? %>
