@@ -1,0 +1,57 @@
+<%= simple_form_for [@child, @event] do |f| %>
+  <%= f.error_notification %>
+
+  <div class="mb-3">
+    <%= f.input :type, 
+                collection: Event::EVENT_TYPES,
+                label: "Type d'événement",
+                include_blank: false,
+                disabled: @event.persisted? %>
+  </div>
+
+
+  <div class="mb-3">
+    <%= f.input :start_time, as: :datetime, html5: true, label: "Date et heure de début" %>
+  </div>
+
+  <!-- Champs conditionnels statiques (on ajoutera du JS plus tard pour les cacher/montrer dynamiquement) -->
+  <% if @event.is_a?(Biberon) || @event.type == "biberon" %>
+    <div class="mb-3">
+      <%= f.input :value_float, label: "Quantité (ml)", input_html: { step: 10 } %>
+    </div>
+  <% elsif @event.is_a?(Temperature) || @event.type == "Temperature" %>
+    <div class="mb-3">
+      <%= f.input :value_float, label: "Température (°C)", input_html: { step: 0.1 } %>
+    </div>
+  <% elsif @event.is_a?(Poids) || @event.type == "Poids" %>
+    <div class="mb-3">
+      <%= f.input :value_float, label: "Poids (kg)", input_html: { step: 0.01 } %>
+    </div>
+  <% elsif @event.is_a?(Couche) || @event.type == "Couche" %>
+    <div class="mb-3">
+      <%= f.input :value_string,
+                  as: :select,
+                  collection: Couche::DIAPER_CONTENT,
+                  include_blank: true,
+                  label: "Contenu de la couche" %>
+    </div>
+  <% elsif @event.is_a?(Dodo) || @event.type == "Dodo" %>
+    <div class="mb-3">
+      <%= f.input :end_time, as: :datetime, html5: true, label: "Heure de fin" %>
+    </div>
+  <% end %>
+
+  <% if @event.type.in?(%w[Dodo Maladie]) %>
+    <div class="mb-3">
+      <%= f.input :end_time, as: :datetime, html5: true, label: "Date et heure de fin" %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.input :comment, as: :text, label: "Commentaire (optionnel)" %>
+  </div>
+
+  <%= f.button :submit, "Enregistrer l'événement", class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to "Retour", child_events_path(@child), class: "btn btn-link" %>

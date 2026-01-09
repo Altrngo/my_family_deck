@@ -1,57 +1,5 @@
 <h1>Ajouter un événement pour <%= @child.name %></h1>
 
-<%= simple_form_for [@child, @event] do |f| %>
-  <%= f.error_notification %>
+<%= render "form" %>
 
-  <div class="mb-3">
-    <%= f.input :type, 
-                collection: Event::EVENT_TYPES,
-                label: "Type d'événement",
-                include_blank: false %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.input :start_time, as: :datetime, html5: true, label: "Date et heure de début" %>
-  </div>
-
-  <!-- Champs conditionnels statiques (on ajoutera du JS plus tard pour les cacher/montrer dynamiquement) -->
-  <% if @event.type.in?(%w[Biberon Temperature Poids Taille]) %>
-    <div class="mb-3">
-      <%= f.input :value_float, 
-                  label: case @event.type
-                         when "Biberon" then "Quantité (ml)"
-                         when "Temperature" then "Température (°C)"
-                         when "Poids" then "Poids (kg)"
-                         when "Taille" then "Taille (cm)"
-                         end %>
-    </div>
-  <% end %>
-
-  <% if @event.type.in?(%w[Couche Medicament Maladie Repas Vaccin Bobo Evenement]) %>
-    <div class="mb-3">
-      <%= f.input :value_string, 
-                  as: (@event.type == "Couche" ? :select : :text),
-                  collection: (@event.type == "Couche" ? Event::DIAPER_CONTENT : nil),
-                  include_blank: true,
-                  label: case @event.type
-                         when "Couche" then "Contenu de la couche"
-                         when "Medicament" then "Nom du médicament"
-                         else "Description"
-                         end %>
-    </div>
-  <% end %>
-
-  <% if @event.type.in?(%w[Dodo Maladie]) %>
-    <div class="mb-3">
-      <%= f.input :end_time, as: :datetime, html5: true, label: "Date et heure de fin" %>
-    </div>
-  <% end %>
-
-  <div class="mb-3">
-    <%= f.input :comment, as: :text, label: "Commentaire (optionnel)" %>
-  </div>
-
-  <%= f.button :submit, "Enregistrer l'événement", class: "btn btn-primary" %>
-<% end %>
-
-<%= link_to "Retour", child_events_path(@child), class: "btn btn-link" %>
+<%= link_to "Retour à la liste", child_events_path(@child), class: "btn btn-secondary" %>

@@ -44,6 +44,13 @@
             <% if event.comment.present? %>
               <em>Commentaire : <%= event.comment %></em>
             <% end %>
+
+            <div>
+              <small class="text-muted">
+                Créé par <%= event.user&.first_name || event.user&.email || "Anonyme" %>
+                le <%= event.created_at.strftime("%d/%m/%Y à %H:%M") %>
+              </small>
+            </div>
           </p>
         </div>
       </div>
@@ -52,5 +59,7 @@
 <% else %>
   <p class="text-muted">Aucun événement enregistré pour cet enfant.</p>
 <% end %>
+
+
 
 <%= link_to "Retour au profil", @child, class: "btn btn-secondary mt-3" %>

@@ -1,0 +1,9 @@
+<h1>Détail de l'événement : <%= @event.type %></h1>
+
+<p>
+  <strong>Date :</strong> <%= @event.start_time.strftime("%d/%m/%Y %H:%M") %><br>
+  <strong>Type :</strong> <%= @event.type %><br>
+  <!-- Ajoute les champs spécifiques selon le type, comme dans l'index -->
+</p>
+
+<%= link_to "Retour à la liste", child_events_path(@child), class: "btn btn-secondary" %>
