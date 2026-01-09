@@ -1,4 +1,4 @@
-<%= simple_form_for [@child, @event] do |f| %>
+<%= simple_form_for [@child, @event.becomes(Event)] do |f| %>
   <%= f.error_notification %>
 
   <div class="mb-3">
